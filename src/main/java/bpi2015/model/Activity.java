@@ -105,6 +105,14 @@ public class Activity {
 		this.kindsOfPermit = kindsOfPermit;
 	}
 	
+	public String getKindsOfPermitString() {
+		String res = "";
+		for (int i = 0;i<this.kindsOfPermit.length;i++){
+			res+=(this.kindsOfPermit[i]+"#");
+		}
+		return res;
+	}
+	
 	
 
 }

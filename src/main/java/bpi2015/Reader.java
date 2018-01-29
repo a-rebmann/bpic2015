@@ -47,7 +47,7 @@ public class Reader {
 						e.printStackTrace();
 					}
 			    	 String actionCode = nextLine[4];
-			    	 String activityNameEN = nextLine[5];
+			    	 String activityNameEN = nextLine[19];
 			    	 String[] kindOfPermit = nextLine[15].split(",");
 			    	 Activity a = new Activity(caseId,name,resource,date.getTime(),actionCode,activityNameEN);
 			    	 a.setKindsOfPermit(kindOfPermit);
