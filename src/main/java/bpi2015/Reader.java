@@ -17,6 +17,11 @@ import com.opencsv.CSVReader;
 import bpi2015.model.Activity;
 import bpi2015.model.Case;
 
+/**
+ * Class for reading from the file syste,
+ * @author 
+ *
+ */
 public class Reader {
 	private String[] paths;
 	
@@ -39,6 +44,13 @@ public class Reader {
 			    	 Long caseId = Long.parseLong(nextLine[0]);
 			    	 String name = nextLine[1];
 			    	 Long resource = Long.parseLong(nextLine[2]);
+			    	 Long monitoring = Long.parseLong(nextLine[26]);
+			    	 Long responsible = 0L;
+			    	 try{
+			    		  responsible = Long.parseLong(nextLine[8]);
+			    	 }catch(NumberFormatException e){
+			    		 System.err.println("no responsible actor");
+			    	 }
 			    	 String time = nextLine[3];
 			    	 Date date=null;
 			    	 try {
@@ -48,9 +60,13 @@ public class Reader {
 					}
 			    	 String actionCode = nextLine[4];
 			    	 String activityNameEN = nextLine[19];
+			    	 String status = nextLine[11];
 			    	 String[] kindOfPermit = nextLine[15].split(",");
 			    	 Activity a = new Activity(caseId,name,resource,date.getTime(),actionCode,activityNameEN);
 			    	 a.setKindsOfPermit(kindOfPermit);
+			    	 a.setStatus(status);
+			    	 a.setMonitoring(monitoring);
+			    	 a.setResponsible(responsible);
 			    	 if(cases.containsKey(caseId))
 			    		 cases.get(caseId).add(a);
 			    	 else{

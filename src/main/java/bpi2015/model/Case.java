@@ -3,6 +3,11 @@ package bpi2015.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A case
+ * @author 
+ *
+ */
 public class Case {
 	
 	private Long caseId;

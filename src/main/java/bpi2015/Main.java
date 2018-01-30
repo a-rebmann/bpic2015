@@ -3,6 +3,13 @@ package bpi2015;
 import java.util.Map;
 import java.util.Map.Entry;
 
+
+/**
+ * Main class prints results to the console reads all files from the file system (see Reader) and writes stuff (see Writer)
+ * paths need to be adapted
+ * @author 
+ *
+ */
 public class Main {
 	public static String dir="/Users/adrianrebmann/Dropbox/PMFallstudie/Datasets/CSV/";
 	public static String[] filenames={"BPIC15_1.csv","BPIC15_2.csv","BPIC15_3.csv","BPIC15_4.csv","BPIC15_5.csv"};
@@ -21,23 +28,24 @@ public class Main {
 			newpaths[i]=dir+writefilenames[i];
 		}
 		Writer write = new Writer(sets,newpaths);
-		write.write();
+		//write.write();
+		write.combine(dir+"BPI15_combined_orga.csv");
 		
-		/*
+		
+		
 		for(int i = 0; i<sets.length;i++){
 			System.out.println("Log: "+sets[i].getNumber() + " "+ sets[i].getCases().size()+" "+sets[i].getMeanDuration());
-			Statistics s = new Statistics(sets[i]);
-			
-			Map<String,Integer> count=s.countPermitsByType();*/
-			/*for(Entry<String,Integer> e : count.entrySet()){
+			Statistics s = new Statistics(sets[i]);		
+			Map<String,Integer> count=s.countPermitsByType();
+			for(Entry<String,Integer> e : count.entrySet()){
 				System.out.println(e.getKey()+" "+e.getValue());
-			}*/
-			/*Map<String, Long> avgs = s.getAvgDuration();
+			}
+			Map<String, Long> avgs = s.getAvgDuration();
 			System.out.println("----------------------------------");
 			for(Entry<String,Long> e : avgs.entrySet()){
 				System.out.println(e.getKey()+" "+e.getValue());
 			}
-		}**/
+		}
 	}
 	
 }
