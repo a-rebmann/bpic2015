@@ -42,9 +42,7 @@ def resouceActivityMatrix(log_number):
                     matrix[resource][activity] = matrix[resource][activity] #/ 1    fill in suitable number!
             sorted(matrix[resource])
 
-            writer.writerow()
-
-resouceActivityMatrix(1)
+    pprint.pprint(matrix)
 
 # Ermittelt Kombination aus Monitoring, Resources und Responsible
 def getCombinationResources():
@@ -120,14 +118,15 @@ def getCombinationResources():
 
 #getCombinationResources()
 
-def mitarbeiter_wechsel():
+#Computes the Overlapping of resources, responsibles or monitoring (computes also worktime and participated activities)
+def computeOverlap(role_name):
     #Set Up Resource Sets
     resource_sets = dict()
     for i in range(1, 6):
         trace = csv_dict_list(file_path + str(i)+ ".csv")
         resources = set()
         for t in trace:
-            resources.add(t["Resource"])
+            resources.add(t[role_name])
         resource_sets[str(i)] = resources
 
 
@@ -136,13 +135,11 @@ def mitarbeiter_wechsel():
         overlaps = []
         trace_list = csv_dict_list(file_path + str(i)+ ".csv")
         for t in trace_list:
-            res = t["Resource"]
+            res = t[role_name]
             for x in range(1, 6):
                 if x != i:
                     for resource in resource_sets[str(x)]:
                         if res == resource:
-                            #print (res, x, t["Complete Timestamp"])
-
                             if not overlaps:
                                 overlap = {"R" : res, "Log" : str(x), "start" : t["Complete Timestamp"], "end" : t["Complete Timestamp"], "sum" : 1}
                                 overlaps.append(overlap)
@@ -165,3 +162,8 @@ def mitarbeiter_wechsel():
                                     overlap = {"R" : res, "Log" : str(x), "start" : t["Complete Timestamp"], "end" : t["Complete Timestamp"], "sum" : 1}
                                     overlaps.append(overlap)
         pprint.pprint (overlaps)
+
+
+#computeOverlap("Resource")
+#computeOverlap("(case) Responsible_actor")
+computeOverlap("monitoringResource")
