@@ -58,7 +58,7 @@ public class Reader {
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
-			    	 String actionCode = nextLine[4];
+			    	 String actionCode = nextLine[18];
 			    	 String activityNameEN = nextLine[19];
 			    	 String status = nextLine[11];
 			    	 String[] kindOfPermit = nextLine[15].split(",");

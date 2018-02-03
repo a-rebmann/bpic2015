@@ -77,6 +77,24 @@ public class Case {
 		return max-min;
 	}
 	
+	public Long getStart(){
+		Long min = Long.MAX_VALUE;
+		for(Activity a : this.activities){
+			if(a.getTimestamp()<min)
+				min=a.getTimestamp();
+		}
+		return min;
+	}
+	
+	public Long getEnd(){
+		Long max = Long.MIN_VALUE;
+		for(Activity a : this.activities){
+			if(a.getTimestamp()>max)
+				max=a.getTimestamp();
+		}
+		return max;
+	}
+	
 	
 	
 

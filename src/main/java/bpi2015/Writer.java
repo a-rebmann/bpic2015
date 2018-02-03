@@ -6,7 +6,9 @@ package bpi2015;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -87,4 +89,54 @@ public class Writer {
 			e.printStackTrace();
 		}
 	}
+	
+	public void writeCases(String path){
+		try {
+			CSVWriter writer=  new CSVWriter(new FileWriter(path), ',');
+			String[] header = "CaseId#Resouces#Duration#Start#End#Type#Status#Monitoring#Responsible#Log".split("#");
+			writer.writeNext(header);
+			for (int i =0;i<this.paths.length;i++){
+				SimpleDateFormat parser=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS");
+					DataSet d = this.ds[i];
+					Map<Long,Case> cases = d.getCases();
+					for(Entry<Long,Case> e : cases.entrySet()){
+						Long caseID = e.getKey();
+						String resources = "";
+						List<Long> reso = new ArrayList<>();
+		
+						List<Long> moni = new ArrayList<>();
+						Long duration = e.getValue().getDuration();
+						Long dur = duration/3600000;
+						String typesOfPermit = "";
+						String status = "";
+						String monitoring = "";
+						String responsible = "";
+						for(Activity a : e.getValue().getActivities()){
+							if(!reso.contains(a.getResource()))
+								reso.add(a.getResource());
+							if(!moni.contains(a.getMonitoring()))
+								moni.add(a.getMonitoring());
+							status=a.getStatus();
+							typesOfPermit=a.getKindsOfPermitString();
+							responsible=a.getResponsible().toString();
+						}
+						for(Long l : reso){
+							resources += l.toString()+"#";
+						}
+						for (Long l :moni){
+							monitoring += l.toString()+"#";
+						}
+						String s = parser.format(new Date(+e.getValue().getStart()));
+						String en = parser.format(new Date(+e.getValue().getEnd()));
+						String[] entries = (caseID+","+resources+","+dur+","+s+","+en+","+typesOfPermit+","+status+","+monitoring+","+responsible+","+i).split(",");
+						writer.writeNext(entries);
+					}	
+				}
+			 writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 }
